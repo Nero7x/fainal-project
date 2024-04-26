@@ -12,7 +12,7 @@ def input():
 
 @app.route('/diagram')
 def diagram():
-    return render_template('diagram.html')
+    return render_template('diagram.html',)
 
 
 if __name__ == '__main__':
