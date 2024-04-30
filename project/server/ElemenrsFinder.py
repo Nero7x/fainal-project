@@ -9,7 +9,7 @@ class ElementsFinder:
     keywords = {}
     punct = string.punctuation
     def get_unused_puncs(kws):
-        puncs = list(ElementsFinder.punct)
+        puncs = list(string.punctuation)
         for kw in kws:
             for c in kw:
                 if c in puncs:
@@ -29,48 +29,47 @@ class ElementsFinder:
 
         stopwords = nltk.corpus.stopwords.words('english')
 
-        train['Title'] = train['Title'].str.lower().replace(unused_puncs, '').str.split(' ').map(lambda x: list(set(x).difference(stopwords)))
+        train['Title'] = train['Title'].str.lower().replace(unused_puncs,'').str.split(' ').map(lambda x: list(set(x).difference(stopwords)))
         return train
 
 
 
-    def keyword_existence(tag_kws, title_kws):
+    def existence_whole_keyword(tag_kws, title_kws):
         index = 0
         if type(tag_kws) == float or type(title_kws) == float:
             return
         print(set(title_kws).difference(tag_kws))
         for kw in set(title_kws).difference(tag_kws):
-            ElementsFinder.keywords.setdefault(kw, 0)
-            ElementsFinder.keywords.setdefault[kw].setdefault('title', 0)
-            ElementsFinder.keywords.setdefault[kw]['title'] += 1
+            ElementsFinder.keywords.setdefault(kw, {})
+            ElementsFinder.keywords[kw].setdefault('title', 0)
+            ElementsFinder.keywords[kw]['title'] += 1
         print("second")
         index = 0
         for kw in set(title_kws).intersection(tag_kws):
             print(index)
-            ElementsFinder.keywords.setdefault.setdefault(kw, {})
-            ElementsFinder.keywords.setdefault[kw].setdefault('both', 0)
-            ElementsFinder.keywords.setdefault[kw]['both'] += 1
+            ElementsFinder.keywords.setdefault(kw, {})
+            ElementsFinder.keywords[kw].setdefault('both', 0)
+            ElementsFinder.keywords[kw]['both'] += 1
         print("Third")
         index = 0
         for kw in set(tag_kws).difference(title_kws):
             print(index)
-            ElementsFinder.keywords.setdefault.setdefault(kw, {})
-            ElementsFinder.keywords.setdefault[kw].setdefault('tag', 0)
-            ElementsFinder.keywords.setdefault[kw]['tag'] += 1
+            ElementsFinder.keywords.setdefault(kw, {})
+            ElementsFinder.keywords[kw].setdefault('tag', 0)
+            ElementsFinder.keywords[kw]['tag'] += 1
 
 
     def check_keywords(tag_kws, title_kws):
         for kw in tag_kws:
             if '-' in kw:
-                kw_new = kw.replace('-', ' ')
+                kw_new = kw.replace('-', '')
                 if set(kw_new).issubset(title_kws):
-                    ElementsFinder.keywords.setdefault(kw, {})
                     ElementsFinder.keywords[kw].setdefault('both', 0)
                     ElementsFinder.keywords[kw]['both'] += 1
 
 
 
-    def calculate_scores(keywords, train):
+    def calculate_scores(keywords, train): #train = tf-idf
         n = len(train.index)
         removeKeys = []
         for kw in keywords.keys():
@@ -85,11 +84,12 @@ class ElementsFinder:
             elif total_title == 0:
                 removeKeys.append(kw)
             else:
-                p = keywords[kw]['both'] / (keywords[kw]['both'] + keywords[kw]['title']) 
-                t1 = keywords[kw]['both'] / n * (keywords[kw]['both'] + keywords[kw]['title']) 
-                t2 = keywords[kw]['both'] * np.log(n / total_title) 
+                #Posterior probability 'p' = both / (both + title)
+                keywords[kw]['p'] = 1.0 * keywords[kw]['both'] / total_title 
+                #tf-idf 'ti' = both + ln( n / (both + title))
+                keywords[kw]['ti'] = 1.0 * keywords[kw]['both'] * np.log(n / total_title)  
             
-                if t1 <= 1: 
+                if keywords[kw]['ti'] <= 1: 
                     removeKeys.append(kw)
 
         return removeKeys
@@ -111,26 +111,32 @@ class ElementsFinder:
     def decision_rule(title_hws, keywords, stopwords):
         nb_scores = {}
         ti_scores = {}
-        for hw in set(title_hws).intersection(keywords.keys()):
-            nb_scores[hw] = keywords[hw]['p']
-            ti_scores[hw] = keywords[hw]['ti']
+        #get score of each whole kw in title
+        for kw in set(title_hws).intersection(keywords.keys()):
+            nb_scores[kw] = keywords[kw]['p']
+            ti_scores[kw] = keywords[kw]['ti']
 
-        for hw in filter(lambda x: '-' in x, keywords.keys()):
-            hw_new = set(hw.replace('-', ' ').split()).difference(stopwords)
+
+        #get score of each known kw with all part in title
+        for kw in filter(lambda x: '-' in x, keywords.keys()):
+            hw_new = set(kw.replace('-', '').split()).difference(stopwords)
             if hw_new.issubset(title_hws):
-                nb_scores[hw] = keywords[hw]['p']
-                ti_scores[hw] = keywords[hw]['ti']
+                nb_scores[kw] = keywords[kw]['p']
+                ti_scores[kw] = keywords[kw]['ti']
 
+        #1- adding tag if posterior probability is higher than or equal to 0.5
         hws_to_tag = []
-        for hw in sorted(nb_scores, key=nb_scores.get, reverse=True):
-            if nb_scores[hw] >= 0.5:
-                hws_to_tag.append(hw)
+        for kw in sorted(nb_scores, key=nb_scores.get, reverse=True):
+            if nb_scores[kw] >= 0.5:
+                hws_to_tag.append(kw)
 
-        for hw in sorted(ti_scores, key=ti_scores.get, reverse=True):
-            if hw not in hws_to_tag:
-                hws_to_tag.append(hw)
+        #2-add highest scoring to TF-IDF keywords if not already added.
+        for kw in sorted(ti_scores, key=ti_scores.get, reverse=True):
+            if kw not in hws_to_tag:
+                hws_to_tag.append(kw)
                 break
 
+        #3-Add 'unknown' if there no tags 
         if len(hws_to_tag) == 0:
             hws_to_tag.append('unknown')
 
