@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import nltk as nltk
 import string
+from server import ElemenrsFinder as EF
+from server import ReletionshipFinder as RF
 
 #doc = "./client/nfr.csv"
 #req_data = pd.read_csv(doc, delimiter=':', nrows=5, header=None)
@@ -30,7 +32,25 @@ nlp = spacy.load('en_core_web_sm')
 # الجمل التي نريد تحليلها
 texts = ["The user logs in to the system using their username and password.",
          "The admin updates the user's profile.",
-         "The system sends a notification to the user."]
+         "The system sends a notification to the user.",
+         "The user can change their password at any time.",
+         "The system automatically logs out after a period of inactivity for 15 minutes.",
+         "The admin can add or delete users from the system.",
+         "The system stores all user data securely.",
+         "The user can recover their password using their email address.",
+         "The system verifies the user's email address before creating an account.",
+         "The admin can view usage statistics for all users.",
+         "The user can upload and download files.",
+         "The system encrypts all sensitive data.",
+         "The admin can reset a user's password.",
+         "The user can update their profile picture.",
+         "The system maintains a log of all user activity.",
+         "The user can search for other users.",
+         "The system provides two-factor authentication for added security.",
+         "The admin can suspend or reactivate user accounts.",
+         "The user can send messages to other users.",
+         "The system sends a confirmation email after successful registration."]
+
 
 # قاموس لتخزين النتائج
 output_dict = {}
@@ -48,11 +68,8 @@ for text in texts:
     verbs_without_nouns = []
     noun_verb_relations = []
 
-    verbs = []
-    nouns = []
     for token in doc:
         if token.pos_ == 'VERB':
-            verbs.append(token.text)
             has_noun = False
             for child in token.children:
                 if child.pos_ == 'NOUN':
@@ -63,20 +80,30 @@ for text in texts:
             if not has_noun:
                 verbs_without_nouns.append(token.text)
         elif token.pos_ == 'NOUN':
-
-            nouns.append(token.text)
-
             if token.text not in nouns_with_verbs:
                 nouns_without_verbs.append(token.text)
 
+        actor = EF.ElementsFinder.findActor(doc)
+        usecase = EF.ElementsFinder.findUsecase(doc,actor)
+        ucr = RF.RelationshipFinder.findUsecaseRelationship(doc)
+        clas = EF.ElementsFinder.findClass(doc)
+        attr = EF.ElementsFinder.findAttributes(doc)
+        method = EF.ElementsFinder.findMethod(doc,actor)
+
     # تخزين المخرجات في القاموس
         output_dict[text] = {
-        'actors': nouns_with_verbs,
-        'usecases': verbs_with_nouns,
-        'usecase relationship': noun_verb_relations,
-        'class': nouns_with_verbs,
-        'attributes': nouns_without_verbs,
-        'relation': verbs_without_nouns
+        #'actors 1': nouns_with_verbs,
+        'actors 2': actor,
+        #'usecases 1': verbs_with_nouns,
+        'usecases 2': usecase,
+        #'usecase relationship 1': noun_verb_relations,
+        'usecase relationship 2': ucr,
+        #'class 1': nouns_with_verbs,
+        'class 2': clas,
+        #'attributes 1': nouns_without_verbs,
+        'attributes 2': attr,
+        #'relation': verbs_without_nouns,
+        'method' : method,
         }
 
 print(output_dict)
