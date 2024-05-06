@@ -55,58 +55,37 @@ texts = ["The user logs in to the system using their username and password.",
 # قاموس لتخزين النتائج
 output_dict = {}
 
-
 for text in texts:
 
-    # تحليل النص
     doc = nlp(text)
 
-    # استخراج الأفعال والأسماء والعلاقات بينهم
-    nouns_with_verbs = []
-    nouns_without_verbs = []
-    verbs_with_nouns = []
-    verbs_without_nouns = []
-    noun_verb_relations = []
-
-    for token in doc:
-        if token.pos_ == 'VERB':
-            has_noun = False
-            for child in token.children:
-                if child.pos_ == 'NOUN':
-                    nouns_with_verbs.append(child.text)
-                    verbs_with_nouns.append(token.text)
-                    noun_verb_relations.append(f'Association({child.text} --- {token.text})')
-                    has_noun = True
-            if not has_noun:
-                verbs_without_nouns.append(token.text)
-        elif token.pos_ == 'NOUN':
-            if token.text not in nouns_with_verbs:
-                nouns_without_verbs.append(token.text)
-
-        actor = EF.ElementsFinder.findActor(doc)
-        usecase = EF.ElementsFinder.findUsecase(doc,actor)
-        ucr = RF.RelationshipFinder.findUsecaseRelationship(doc)
-        clas = EF.ElementsFinder.findClass(doc)
-        attr = EF.ElementsFinder.findAttributes(doc)
-        method = EF.ElementsFinder.findMethod(doc,actor)
+    actor = EF.ElementsFinder.findActor(doc)
+    usecase = EF.ElementsFinder.findUsecase(doc,actor)
+    ucr = RF.RelationshipFinder.findUsecaseRelationship(doc, actor)
+    clas = EF.ElementsFinder.findClass(doc)
+    attr = EF.ElementsFinder.findAttributes(doc)
+    method = EF.ElementsFinder.findMethod(doc,actor)
+    #cr = RF.RelationshipFinder.findClassRleationship(doc)
 
     # تخزين المخرجات في القاموس
-        output_dict[text] = {
-        #'actors 1': nouns_with_verbs,
-        'actors 2': actor,
-        #'usecases 1': verbs_with_nouns,
-        'usecases 2': usecase,
-        #'usecase relationship 1': noun_verb_relations,
-        'usecase relationship 2': ucr,
-        #'class 1': nouns_with_verbs,
-        'class 2': clas,
-        #'attributes 1': nouns_without_verbs,
-        'attributes 2': attr,
-        #'relation': verbs_without_nouns,
-        'method' : method,
-        }
+    output_dict[text] = {
+    #'actors 1': nouns_with_verbs,
+    #'actors 2': actor,
+    #'usecases 1': verbs_with_nouns,
+    #'usecases 2': usecase,
+    #'usecase relationship 1': noun_verb_relations,
+    'usecase relationship 2': ucr,
+    #'class 1': nouns_with_verbs,
+    'class 2': clas,
+    #'attributes 1': nouns_without_verbs,
+    #'attributes 2': attr,
+    #'relation': verbs_without_nouns,
+    #'method' : method,
+    }
 
 print(output_dict)
+
+
 
 
 
