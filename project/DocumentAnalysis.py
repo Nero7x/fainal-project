@@ -26,10 +26,8 @@ from server import ReletionshipFinder as RF
 
 import spacy
 
-# تحميل النموذج اللغوي
 nlp = spacy.load('en_core_web_sm')
 
-# الجمل التي نريد تحليلها
 texts = ["The user logs in to the system using their username and password.",
          "The admin updates the user's profile.",
          "The system sends a notification to the user.",
@@ -49,10 +47,29 @@ texts = ["The user logs in to the system using their username and password.",
          "The system provides two-factor authentication for added security.",
          "The admin can suspend or reactivate user accounts.",
          "The user can send messages to other users.",
-         "The system sends a confirmation email after successful registration."]
+         "The system sends a confirmation email after successful registration.",
+         "The user can bookmark their favorite pages.",
+         "The admin can manage roles and permissions of users.",
+         "The system supports multiple languages.",
+         "The user can view their activity history.",
+         "The system performs regular backups of all data.",
+         "The admin can generate reports based on user activity.",
+         "The user can customize their user interface.",
+         "The system provides a help section for new users.",
+         "The admin can send global notifications to all users.",
+         "The user can import and export data in various formats.",
+         "The system provides an API for third-party integrations.",
+         "The admin can perform bulk operations on multiple users at once.",
+         "The user can opt-in or opt-out of email notifications.",
+         "The system logs all errors and exceptions.",
+         "The admin can schedule tasks to be performed automatically.",
+         "The user can share their content with others.",
+         "The system provides a search functionality with advanced filters.",
+         "The admin can manage the system settings.",
+         "The user can request support directly from the system.",
+         "The system sends regular updates and patches.",]
 
 
-# قاموس لتخزين النتائج
 output_dict = {}
 
 for text in texts:
@@ -67,19 +84,12 @@ for text in texts:
     method = EF.ElementsFinder.findMethod(doc,actor)
     #cr = RF.RelationshipFinder.findClassRleationship(doc)
 
-    # تخزين المخرجات في القاموس
     output_dict[text] = {
-    #'actors 1': nouns_with_verbs,
     #'actors 2': actor,
-    #'usecases 1': verbs_with_nouns,
-    #'usecases 2': usecase,
-    #'usecase relationship 1': noun_verb_relations,
-    'usecase relationship 2': ucr,
-    #'class 1': nouns_with_verbs,
-    'class 2': clas,
-    #'attributes 1': nouns_without_verbs,
+    'usecases 2': usecase,
+    #'usecase relationship 2': ucr,
+    #'class 2': clas,
     #'attributes 2': attr,
-    #'relation': verbs_without_nouns,
     #'method' : method,
     }
 
