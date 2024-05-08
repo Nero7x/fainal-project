@@ -28,15 +28,15 @@ import spacy
 
 nlp = spacy.load('en_core_web_sm')
 
-texts = ["The user logs in to the system using their username and password.",
-         "The admin updates the user's profile.",
-         "The system sends a notification to the user.",
-         "The user can change their password at any time.",
-         "The system automatically logs out after a period of inactivity for 15 minutes.",
-         "The admin can add or delete users from the system.",
-         "The system stores all user data securely.",
-         "The user can recover their password using their email address.",
-         "The system verifies the user's email address before creating an account.",
+texts = [#"The user logs in to the system using their username and password.",
+         #"The admin updates the user's profile.",
+         #"The system sends a notification to the user.",
+         #"The user can change their password at any time.",
+         #"The system automatically logs out after a period of inactivity for 15 minutes.",
+         #"The admin can add or delete users from the system.",
+         #"The system stores all user data securely.",
+         #"The user can recover their password using their email address.",
+         #"The system verifies the user's email address before creating an account.",
          "The admin can view usage statistics for all users.",
          "The user can upload and download files.",
          "The system encrypts all sensitive data.",
@@ -63,11 +63,12 @@ texts = ["The user logs in to the system using their username and password.",
          "The user can opt-in or opt-out of email notifications.",
          "The system logs all errors and exceptions.",
          "The admin can schedule tasks to be performed automatically.",
-         "The user can share their content with others.",
-         "The system provides a search functionality with advanced filters.",
-         "The admin can manage the system settings.",
-         "The user can request support directly from the system.",
-         "The system sends regular updates and patches.",]
+         #"The user can share their content with others.",
+         #"The system provides a search functionality with advanced filters.",
+         #"The admin can manage the system settings.",
+         #"The user can request support directly from the system.",
+         #"The system sends regular updates and patches.",
+         ]
 
 
 output_dict = {}
@@ -85,12 +86,12 @@ for text in texts:
     #cr = RF.RelationshipFinder.findClassRleationship(doc)
 
     output_dict[text] = {
-    #'actors 2': actor,
-    'usecases 2': usecase,
-    #'usecase relationship 2': ucr,
-    #'class 2': clas,
-    #'attributes 2': attr,
-    #'method' : method,
+    #'actors': actor,
+    #'usecases': usecase,
+    #'usecase relationship': ucr,
+    'class': clas,
+    'attributes': attr,
+    'method' : method,
     }
 
 print(output_dict)
