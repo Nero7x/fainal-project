@@ -4,11 +4,13 @@
     <h1>input</h1>
     <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_file') }}">
         <input type="file" name="file">
-        <input type="submit" value="Upload">
+        {% if message %}
+        <p>{{ message }}</p>
+        {% endif %}
+        <select id="diagrams" name="diagrams">
+            <option value="class">Class Diagram</option>
+            <option value="usecase">Usecase Diagram</option>
+        </select>
+        <input type="submit" value="Upload"> 
     </form>  
-
-    {% if message %}
-    <p>{{ message }}</p>
-    {% endif %} 
-    
 {%endblock%}
