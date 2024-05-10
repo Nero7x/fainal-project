@@ -2,4 +2,13 @@
 
 {% block body%}
     <h1>input</h1>
+    <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_file') }}">
+        <input type="file" name="file">
+        <input type="submit" value="Upload">
+    </form>  
+
+    {% if message %}
+    <p>{{ message }}</p>
+    {% endif %} 
+    
 {%endblock%}

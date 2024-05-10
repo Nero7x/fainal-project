@@ -1,14 +1,27 @@
-from flask import Flask, render_template
-
+import os
+from flask import Flask, redirect, render_template, request, url_for
+from server import DocumentAnalysis as DAnalysis 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('home.html')    
 
-@app.route('/input')
-def input():
-    return render_template('input.html')
+@app.route('/input', methods=['GET', 'POST'])
+def upload_file():
+    message = ''
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = file.filename
+        file_extension = os.path.splitext(filename)[1]
+        
+        if file_extension in ['.txt', '.pdf']:
+            DAnalysis.dataInitialization(file,file_extension)
+            return redirect(url_for('diagram'))
+        else:
+            message = 'Invalid file type. Please upload a .txt or .pdf file.'
+    return render_template('input.html', message=message)
+
 
 @app.route('/diagram')
 def diagram():
