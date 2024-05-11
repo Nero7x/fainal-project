@@ -18,11 +18,11 @@ class RelationshipFinder:
                                     for grandchild in doc[i+2].children:
                                         if grandchild.dep_ == 'dobj':
                                             dobj = grandchild.text
-                                            relationship.append(f"{child.text} --> {doc[i+2].text} {dobj}")
+                                            relationship.append(f"{child.text} --> \"{doc[i+2].text} {dobj}\"")
                                 if dobj:
-                                    relationship.append(f"{child.text} --> {token.text} {dobj}")
+                                    relationship.append(f"{child.text} --> \"{token.text} {dobj}\"")
                                 else:
-                                    relationship.append(f"{child.text} --> {token.text}")
+                                    relationship.append(f"{child.text} --> \"{token.text}\"")
         return relationship
     
 

@@ -1,0 +1,91 @@
+@startuml
+
+'Classes:
+'-------------
+
+class reports {
+  + generatereports()
+} 
+
+class admin {
+  - profile: String
+  - password: String
+  + updatesprofile()
+  + manageroles()
+  + sendnotifications()
+  + managesettings()
+  + viewstatistics()
+  + suspendaccounts()
+  + deleteusers()
+  + performoperations()
+  + addusers()
+  + reactivateaccounts()
+  + scheduletasks()
+  + generatereports()
+  + resetpassword()
+} 
+
+class user {
+  - profile: String
+  - content: String
+  - username: String
+  - favorite: String
+  - user: String
+  - email: String
+  - password: String
+  - activity: String
+  + customizeinterface()
+  + requestsupport()
+  + uploadfiles()
+  + logs()
+  + viewhistory()
+  + import()
+  + search()
+  + updatepicture()
+  + changepassword()
+  + opt-in()
+  + sendmessages()
+  + recoverpassword()
+  + sharecontent()
+  + bookmarkpages()
+  + downloadfiles()
+} 
+
+class system {
+  - email: String
+  + sendsemail()
+  + providessection()
+  + encryptsdata()
+  + sendsnotification()
+  + logserrors()
+  + sendsupdates()
+  + logs()
+  + verifiesaddress()
+  + providesAPI()
+  + storesdata()
+  + maintainslog()
+  + performsbackups()
+  + providesauthentication()
+  + providesfunctionality()
+  + supportslanguages()
+} 
+
+class data {
+  + storesdata()
+} 
+
+class support {
+  + requestsupport()
+} 
+
+class password {
+  - email: String
+  - password: String
+  + recoverpassword()
+} 
+
+'Associations:
+'-------------
+
+
+@enduml 

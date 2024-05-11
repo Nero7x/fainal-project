@@ -1,6 +1,7 @@
 import os
 from flask import Flask, redirect, render_template, request, url_for
-from server import DocumentAnalysis as DAnalysis 
+from server import DocumentAnalysis as DA
+from server import GenerateDiagram as GEN
 app = Flask(__name__)
 
 @app.route('/')
@@ -17,8 +18,8 @@ def upload_file():
         file_extension = os.path.splitext(filename)[1]
         
         if file_extension in ['.txt', '.pdf']:
-            DAnalysis.dataInitialization(file,file_extension,diagram_type)
-            return redirect(url_for('diagram'))
+            DA.DocumentAnalysis.dataInitialization(file,file_extension,diagram_type)
+            return redirect(url_for('diagram', diagram_type = diagram_type))
         else:
             message = 'Invalid file type. Please upload a .txt or .pdf file.'
 
@@ -28,7 +29,9 @@ def upload_file():
 
 @app.route('/diagram')
 def diagram():
-    return render_template('diagram.html',)
+    diagram_type = request.args.get('diagram_type', default=None, type=str)
+    image_path = GEN.GenerateDiagram.generate_image(diagram_type)
+    return render_template('diagram.html',image_path=image_path)
 
 
 if __name__ == '__main__':
