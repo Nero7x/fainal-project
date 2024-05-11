@@ -7,81 +7,81 @@ class reports {
   + generatereports()
 } 
 
-class admin {
-  - profile: String
-  - password: String
-  + updatesprofile()
-  + manageroles()
-  + sendnotifications()
-  + managesettings()
-  + viewstatistics()
-  + suspendaccounts()
-  + deleteusers()
-  + performoperations()
-  + addusers()
-  + reactivateaccounts()
-  + scheduletasks()
-  + generatereports()
-  + resetpassword()
-} 
-
-class user {
-  - profile: String
-  - content: String
-  - username: String
-  - favorite: String
-  - user: String
-  - email: String
-  - password: String
-  - activity: String
-  + customizeinterface()
-  + requestsupport()
-  + uploadfiles()
-  + logs()
-  + viewhistory()
-  + import()
-  + search()
-  + updatepicture()
-  + changepassword()
-  + opt-in()
-  + sendmessages()
-  + recoverpassword()
-  + sharecontent()
-  + bookmarkpages()
-  + downloadfiles()
-} 
-
 class system {
   - email: String
-  + sendsemail()
-  + providessection()
-  + encryptsdata()
-  + sendsnotification()
-  + logserrors()
   + sendsupdates()
+  + sendsemail()
+  + supportslanguages()
   + logs()
-  + verifiesaddress()
-  + providesAPI()
-  + storesdata()
+  + logserrors()
   + maintainslog()
   + performsbackups()
-  + providesauthentication()
+  + verifiesaddress()
   + providesfunctionality()
-  + supportslanguages()
+  + storesdata()
+  + encryptsdata()
+  + sendsnotification()
+  + providesauthentication()
+  + providessection()
+  + providesAPI()
 } 
 
 class data {
   + storesdata()
 } 
 
-class support {
-  + requestsupport()
-} 
-
 class password {
   - email: String
   - password: String
   + recoverpassword()
+} 
+
+class support {
+  + requestsupport()
+} 
+
+class admin {
+  - password: String
+  - profile: String
+  + resetpassword()
+  + reactivateaccounts()
+  + addusers()
+  + sendnotifications()
+  + viewstatistics()
+  + managesettings()
+  + scheduletasks()
+  + manageroles()
+  + suspendaccounts()
+  + deleteusers()
+  + generatereports()
+  + performoperations()
+  + updatesprofile()
+} 
+
+class user {
+  - username: String
+  - profile: String
+  - email: String
+  - password: String
+  - activity: String
+  - content: String
+  - favorite: String
+  - user: String
+  + recoverpassword()
+  + customizeinterface()
+  + viewhistory()
+  + logs()
+  + requestsupport()
+  + sendmessages()
+  + uploadfiles()
+  + opt()
+  + downloadfiles()
+  + search()
+  + sharecontent()
+  + bookmarkpages()
+  + import()
+  + updatepicture()
+  + changepassword()
 } 
 
 'Associations:

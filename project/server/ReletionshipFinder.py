@@ -25,7 +25,3 @@ class RelationshipFinder:
                                     relationship.append(f"{child.text} --> \"{token.text}\"")
         return relationship
     
-
-    def findClassRleationship():
-        
-        return

@@ -24,14 +24,14 @@ class DocumentAnalysis:
         nlp = spacy.load('en_core_web_sm')
 
         results = {}
-        actor = []
-        usecase = []
-        ucr = []
-        clas = []
-        attr = []
-        method = []
 
         for text in texts:
+            actor = []
+            usecase = []
+            ucr = []
+            clas = []
+            attr = []
+            method = []
             doc = nlp(text)
             if diagram_type == 'usecase':
                 actor = EF.ElementsFinder.findActor(doc)
@@ -42,7 +42,6 @@ class DocumentAnalysis:
                 clas = EF.ElementsFinder.findClass(doc)
                 attr = EF.ElementsFinder.findAttributes(doc)
                 method = EF.ElementsFinder.findMethod(doc,actor)
-                #cr = RF.RelationshipFinder.findClassRleationship(doc)
 
             results[text] = {
             'actors': actor,

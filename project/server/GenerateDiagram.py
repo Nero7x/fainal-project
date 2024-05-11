@@ -5,7 +5,6 @@ import time
 
 class GenerateDiagram():
     def GenerateUsecase(cleanResults):
-
         with open('umlfile/usecase.uml', 'w') as f:
             f.write("@startuml\n \n")
             for actor in cleanResults['actors']:
