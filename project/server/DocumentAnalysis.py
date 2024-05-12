@@ -11,10 +11,11 @@ class DocumentAnalysis:
     def dataInitialization(file,file_extension,diagram_type):
         
         texts = ""
+        #read txt file
         if file_extension == ".txt":
             text = file.read().decode('utf-8') 
             texts = nltk.sent_tokenize(text)
-
+        #read pdf file
         elif file_extension ==".pdf":
             reader = PdfReader(io.BytesIO(file.read()))
             text = ""
@@ -25,6 +26,7 @@ class DocumentAnalysis:
 
         results = {}
 
+        #this loop for take one req from all req
         for text in texts:
             actor = []
             usecase = []
@@ -33,16 +35,18 @@ class DocumentAnalysis:
             attr = []
             method = []
             doc = nlp(text)
+            #if user select usecase do this
             if diagram_type == 'usecase':
                 actor = EF.ElementsFinder.findActor(doc)
                 usecase = EF.ElementsFinder.findUsecase(doc,actor)
                 ucr = RF.RelationshipFinder.findUsecaseRelationship(doc, actor)
+            #if user select class do this
             elif diagram_type == 'class':
                 actor = EF.ElementsFinder.findActor(doc)
                 clas = EF.ElementsFinder.findClass(doc)
                 attr = EF.ElementsFinder.findAttributes(doc)
                 method = EF.ElementsFinder.findMethod(doc,actor)
-
+            #stor results here
             results[text] = {
             'actors': actor,
             'usecases': usecase,
@@ -51,16 +55,14 @@ class DocumentAnalysis:
             'attributes': attr,
             'method' : method,
             }
-
+        #clean Duplicates from results
         cleanResults = DocumentAnalysis.cleanDuplicates(results,texts)
 
-        #for i,result in enumerate(results):
-            #print(f"{i}- {result}: {results[result]}")
+        #generate diagram
         if diagram_type == 'usecase':
             Gen.GenerateDiagram.GenerateUsecase(cleanResults)
         elif diagram_type == 'class': 
             Gen.GenerateDiagram.GenerateClassDiagram(cleanResults, results, texts)
-
 
 
     def cleanDuplicates(results, texts):

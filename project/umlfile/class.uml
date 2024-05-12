@@ -3,31 +3,9 @@
 'Classes:
 '-------------
 
-class reports {
-  + generatereports()
-} 
-
-class system {
-  - email: String
-  + sendsupdates()
-  + sendsemail()
-  + supportslanguages()
-  + logs()
-  + logserrors()
-  + maintainslog()
-  + performsbackups()
-  + verifiesaddress()
-  + providesfunctionality()
-  + storesdata()
-  + encryptsdata()
-  + sendsnotification()
-  + providesauthentication()
-  + providessection()
-  + providesAPI()
-} 
-
-class data {
-  + storesdata()
+class admin {
+  + deleteusers()
+  + addusers()
 } 
 
 class password {
@@ -36,51 +14,20 @@ class password {
   + recoverpassword()
 } 
 
-class support {
-  + requestsupport()
+class system {
+  + storesdata()
+  + sendsnotification()
+  + logs()
 } 
 
-class admin {
-  - password: String
-  - profile: String
-  + resetpassword()
-  + reactivateaccounts()
-  + addusers()
-  + sendnotifications()
-  + viewstatistics()
-  + managesettings()
-  + scheduletasks()
-  + manageroles()
-  + suspendaccounts()
-  + deleteusers()
-  + generatereports()
-  + performoperations()
-  + updatesprofile()
+class data {
+  + storesdata()
 } 
 
 class user {
-  - username: String
-  - profile: String
   - email: String
   - password: String
-  - activity: String
-  - content: String
-  - favorite: String
-  - user: String
   + recoverpassword()
-  + customizeinterface()
-  + viewhistory()
-  + logs()
-  + requestsupport()
-  + sendmessages()
-  + uploadfiles()
-  + opt()
-  + downloadfiles()
-  + search()
-  + sharecontent()
-  + bookmarkpages()
-  + import()
-  + updatepicture()
   + changepassword()
 } 
 

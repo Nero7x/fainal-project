@@ -1,4 +1,3 @@
-from server import ElemenrsFinder as EF
 
 class RelationshipFinder:
 

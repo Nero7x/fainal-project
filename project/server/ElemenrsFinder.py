@@ -11,10 +11,12 @@ class ElementsFinder:
                 # if the next word to the noun is of type 'VERB', 'AUX', or 'ADV'
                 elif i < len(doc) - 1 and doc[i+1].pos_ in ['VERB', 'AUX', 'ADV']:
                     actor1.append(token.text)
+            #find evry noun have verb
             elif token.pos_ == 'VERB':
                 for child in token.children:
                     if child.pos_ == 'NOUN':
                         actor2.append(child.text)
+        #filter result
         finalActor = set(actor1) & set(actor2)
         return finalActor
     
