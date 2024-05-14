@@ -2,7 +2,10 @@ import os
 from flask import Flask, redirect, render_template, request, url_for
 from server import DocumentAnalysis as DA
 from server import GenerateDiagram as GEN
+
 app = Flask(__name__)
+diagramfolder = os.path.join('static','diagram')
+app.config['UPLOAD_FOLDER'] = diagramfolder
 
 @app.route('/')
 def home():
@@ -31,7 +34,8 @@ def upload_file():
 def diagram():
     diagram_type = request.args.get('diagram_type', default=None, type=str)
     image_path = GEN.GenerateDiagram.generate_image(diagram_type)
-    return render_template('diagram.html',image_path=image_path)
+    umldiagram = os.path.join(app.config['UPLOAD_FOLDER'], image_path)
+    return render_template('diagram.html',image_path= umldiagram)
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ class TestFindActor(unittest.TestCase):
         self.assertEqual(RF.RelationshipFinder.findUsecaseRelationship(self.doc ,EF.ElementsFinder.findActor(self.doc)), ["user --> login"])
 
     def test_findClass(self):
-        self.assertEqual(EF.ElementsFinder.findClass(self.doc), {"user"})
+        self.assertEqual(EF.ElementsFinder.findClass(self.doc), ["user", "system"])
 
     def test_findAttributes(self):
         self.assertEqual(EF.ElementsFinder.findAttributes(self.doc), ["username", "password"])

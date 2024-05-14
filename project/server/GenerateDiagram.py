@@ -56,16 +56,18 @@ class GenerateDiagram():
     def generate_image(diagram_type):
         if diagram_type == 'class':
             uml_file_path = "umlfile/class.uml"
-            image_path = "images/class.svg"
+            image_path = "class.svg"
+            save_path = "static/diagram/class.svg"
             plantuml_instance = plantuml.PlantUML(url='http://www.plantuml.com/plantuml/svg/')
-            plantuml_instance.processes_file(uml_file_path, outfile=image_path)
+            plantuml_instance.processes_file(uml_file_path, outfile=save_path)
             return image_path
         elif diagram_type == 'usecase':
             uml_file_path = "umlfile/usecase.uml"
-            image_path = "images/usecase.svg"
+            image_path = "usecase.svg"
+            save_path = "static/diagram/usecase.svg"
             plantuml_instance = plantuml.PlantUML(url='http://www.plantuml.com/plantuml/svg/')
-            plantuml_instance.processes_file(uml_file_path, outfile=image_path)
-            while not os.path.exists(image_path):
+            plantuml_instance.processes_file(uml_file_path, outfile=save_path)
+            while not os.path.exists(save_path):
                 time.sleep(1)
             return image_path
         

@@ -1,27 +1,27 @@
 @startuml
  
-actor admin
 actor password
 actor system
 actor data
+actor admin
 actor user
 rectangle {
-usecase "stores data" 
+usecase "delete users" 
+usecase "recover password" 
 usecase "sends notification" 
 usecase "change password" 
-usecase "add users" 
 usecase "logs" 
-usecase "recover password" 
-usecase "delete users" 
-system --> "logs"
+usecase "add users" 
+usecase "stores data" 
 data --> "stores data"
-system --> "sends notification"
-admin --> "delete users"
-user --> "change password"
-system --> "stores data"
 password --> "recover password"
-user --> "recover password"
+system --> "stores data"
+user --> "change password"
+system --> "sends notification"
 admin --> "add users"
+system --> "logs"
+admin --> "delete users"
+user --> "recover password"
 } 
 
 @enduml 

@@ -3,11 +3,6 @@
 'Classes:
 '-------------
 
-class admin {
-  + deleteusers()
-  + addusers()
-} 
-
 class password {
   - email: String
   - password: String
@@ -15,13 +10,18 @@ class password {
 } 
 
 class system {
-  + storesdata()
   + sendsnotification()
   + logs()
+  + storesdata()
 } 
 
 class data {
   + storesdata()
+} 
+
+class admin {
+  + deleteusers()
+  + addusers()
 } 
 
 class user {
